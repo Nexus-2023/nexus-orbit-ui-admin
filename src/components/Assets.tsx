@@ -1,6 +1,6 @@
 import Image from "next/image"
 import * as React from "react"
-
+import { useState } from "react"
 import IconButton from "@mui/material/IconButton"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
@@ -15,7 +15,7 @@ import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
-
+import TextField from "@mui/material/TextField"
 const AssetData = [
   {
     token: bitcoin,
@@ -242,7 +242,8 @@ export function DeListButton() {
 }
 
 export function WhiteListButton() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [isValidAddress, setIsValidAddress] = useState(true) // Flag to track if address is valid
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -252,12 +253,31 @@ export function WhiteListButton() {
     setOpen(false)
   }
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const formJson = Object.fromEntries(formData.entries())
+    const addr = formJson.text as string
+
+    const ethereumAddressPattern = /^0x[a-fA-F0-9]{40}$/
+
+    if (ethereumAddressPattern.test(addr)) {
+      console.log("Valid Ethereum address:", addr)
+
+      setIsValidAddress(true)
+
+      handleClose()
+    } else {
+      console.log("Invalid Ethereum address:", addr)
+      setIsValidAddress(false)
+    }
+  }
+
   return (
     <React.Fragment>
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        // sx={{ color: "white", backgroundColor: "#0375C9" }}
         sx={{
           color: "white",
           backgroundColor: "#0375C9",
@@ -268,29 +288,87 @@ export function WhiteListButton() {
       >
         WhiteList
       </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"WhiteList Token"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            WhiteListing token contract address
-            0x8a770B7700f941Bb2E6Dd023AD3B22c2c41C5901
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
+      <Dialog open={open} onClose={handleClose}>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>WhiteList Token</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Enter the WhiteListing token contract address
+            </DialogContentText>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="name"
+              name="text"
+              label="Contract Address"
+              type="text"
+              fullWidth
+              variant="standard"
+              error={!isValidAddress}
+              helperText={!isValidAddress ? "Invalid Ethereum address" : ""}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit">Confirm</Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   )
 }
+
+// export function WhiteListButton() {
+//   const [open, setOpen] = React.useState(false)
+
+//   const handleClickOpen = () => {
+//     setOpen(true)
+//   }
+
+//   const handleClose = () => {
+//     setOpen(false)
+//   }
+
+//   return (
+//     <React.Fragment>
+// <Button
+//   variant="contained"
+//   onClick={handleClickOpen}
+//   // sx={{ color: "white", backgroundColor: "#0375C9" }}
+//   sx={{
+//     color: "white",
+//     backgroundColor: "#0375C9",
+//     fontSize: "18px",
+//     paddingX: "2.5rem",
+//     textTransform: "capitalize",
+//   }}
+// >
+//   WhiteList
+// </Button>
+//       <Dialog
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="alert-dialog-title"
+//         aria-describedby="alert-dialog-description"
+//       >
+//         <DialogTitle id="alert-dialog-title">{"WhiteList Token"}</DialogTitle>
+//         <DialogContent>
+//           <DialogContentText id="alert-dialog-description">
+// WhiteListing token contract address
+// 0x8a770B7700f941Bb2E6Dd023AD3B22c2c41C5901
+//           </DialogContentText>
+//         </DialogContent>
+//         <DialogActions>
+//           <Button onClick={handleClose}>Disagree</Button>
+//           <Button onClick={handleClose} autoFocus>
+//             Agree
+//           </Button>
+//         </DialogActions>
+//       </Dialog>
+//     </React.Fragment>
+//   )
+// }
 
 export function ChangeLimitButton() {
   const [open, setOpen] = React.useState(false)
