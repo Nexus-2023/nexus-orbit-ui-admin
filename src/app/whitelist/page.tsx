@@ -145,7 +145,28 @@ export default function Home() {
               </div>
             </>
           )}
-          {isWhitelisted ? (
+          <>
+            <div className=" absolute top-5 right-5 ">
+              <ConnectButton />
+            </div>
+
+            <div className="flex flex-col  space-y-4 mt-8">
+              <h1 className="text-7xl  text-black font-semibold">
+                Whitelist/Delist
+              </h1>
+
+              <h1 className="text-lg  text-gray-500 font-medium">
+                Whitelist or Delist assets
+              </h1>
+            </div>
+
+            <DeListTable />
+
+            <div className=" flex justify-center w-full mt-6 -ml-4">
+              <WhiteListButton />
+            </div>
+          </>
+          {/* {isWhitelisted ? (
             <>
               <div className=" absolute top-5 right-5 ">
                 <ConnectButton />
@@ -176,7 +197,7 @@ export default function Home() {
                 <h1 className="text-4xl font-semibold ">Not Admin</h1>
               </div>
             </>
-          )}
+          )} */}
         </>
       )}
     </div>

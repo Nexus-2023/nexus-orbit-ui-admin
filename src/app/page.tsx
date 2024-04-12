@@ -158,7 +158,24 @@ export default function Home() {
               </div>
             </>
           )}
-          {isWhitelisted ? (
+          <>
+            <div className=" absolute top-5 right-5 ">
+              <ConnectButton />
+            </div>
+
+            <div className="flex flex-col  space-y-4 mt-8">
+              <h1 className="text-7xl  text-black font-semibold">
+                Bridging Assets
+              </h1>
+
+              <h1 className="text-lg  text-gray-500 font-medium">
+                ETH associated assets in native bridge
+              </h1>
+            </div>
+
+            <AssetTable />
+          </>
+          {/* {isWhitelisted ? (
             <>
               <div className=" absolute top-5 right-5 ">
                 <ConnectButton />
@@ -185,7 +202,7 @@ export default function Home() {
                 <h1 className="text-4xl font-semibold ">Not Admin</h1>
               </div>
             </>
-          )}
+          )} */}
         </>
       )}
     </div>
