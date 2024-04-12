@@ -6,71 +6,13 @@ import {
   LanguageIcon,
   ExpandMoreIcon,
 } from "../../public/Icons/icons"
-import {
-  Button,
-  IconButton,
-  SvgIcon,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from "@mui/material"
 
-export function BasicAccordion() {
-  return (
-    <div>
-      <Accordion
-        sx={{
-          color: "white",
-          background: "#0375C9",
-          boxShadow: "none",
-          fontWeight: "700",
-        }}
-      >
-        <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
-          <div className="flex items-center px-3 py-2 -mt-3 -ml-3 text-white justify-center hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
-            <div className="">
-              <Typography sx={{ fontWeight: "700" }}>
-                Partner Networks
-              </Typography>
-            </div>
-            <div className="ml-1">
-              <ExpandMoreIcon />
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            background: "#045192",
-          }}
-        >
-          <Link href={"/Links/Polygon"}>
-            <h1 className="text-md   px-4 py-2 hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
-              {" "}
-              Polygon zkEVM
-            </h1>
-          </Link>
-
-          <Link href={"/Links/Mantle"}>
-            <h1 className="text-md   px-4 py-2 hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
-              {" "}
-              Mantle
-            </h1>
-          </Link>
-
-          <Link href={"/Links/Scroll"}>
-            <h1 className="text-md   px-4 py-2 hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
-              {" "}
-              Scroll
-            </h1>
-          </Link>
-        </AccordionDetails>
-      </Accordion>
-    </div>
-  )
-}
+import { usePathname } from "next/navigation"
 
 export const SideBar = () => {
+  const pathname = usePathname()
+  console.log("patname", pathname)
+
   return (
     <div className="bg-primary text-white relative  font-semibold   min-w-full  w-64  h-[100vh] min-h-full flex-col flex   items-center">
       <div className="p-8">
@@ -87,20 +29,32 @@ export const SideBar = () => {
 
       <div className="space-y-6  flex flex-col mt-8 ">
         <Link href={"/"}>
-          <h1 className="text-md   px-4 py-2 hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
+          <h1
+            className={`text-md px-4 py-2 ${
+              pathname === "/"
+                ? "text-primary bg-white"
+                : "hover:text-primary hover:bg-white"
+            } ease-in-out duration-300 rounded-md`}
+          >
             {" "}
             Change Limits
           </h1>
         </Link>
 
         <Link href={"/whitelist"}>
-          <h1 className="text-md  px-4 py-2 hover:text-primary hover:bg-white ease-in-out duration-300 rounded-md">
+          <h1
+            className={`text-md px-4 py-2 ${
+              pathname === "/whitelist"
+                ? "text-primary bg-white"
+                : "hover:text-primary hover:bg-white"
+            } ease-in-out duration-300 rounded-md`}
+          >
             {" "}
             Whitelist/Delist
           </h1>
         </Link>
       </div>
-      {/* <div className="space-x-4  flex  -ml-5 mt-[5rem] "> */}
+
       <div className="space-x-4  flex  absolute  bottom-10 left-16 ">
         <div className="hover:scale-125  ease-in-out duration-300">
           <Link href={"https://twitter.com/_Nexus_Network"} target="_blank">
