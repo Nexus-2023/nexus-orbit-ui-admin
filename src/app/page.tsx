@@ -32,15 +32,19 @@ export default function Home() {
 
   // const elementsWalletRef2 = useRef<any[]>([])
 
-  const elementsRef = useRef<Array<HTMLHeadingElement | HTMLDivElement | null>>(
-    []
-  )
-  const elementsWalletRef = useRef<
-    Array<HTMLHeadingElement | HTMLDivElement | null>
-  >([])
-  const elementsWalletRef2 = useRef<
-    Array<HTMLHeadingElement | HTMLDivElement | null>
-  >([])
+  // const elementsRef = useRef<
+  //   Array<HTMLHeadingElement | HTMLDivElement | null | undefined>
+  // >([])
+  // const elementsWalletRef = useRef<
+  //   Array<HTMLHeadingElement | HTMLDivElement | null | undefined>
+  // >([])
+  // const elementsWalletRef2 = useRef<
+  //   Array<HTMLHeadingElement | HTMLDivElement | null | undefined>
+  // >([])
+
+  const elementsRef = useRef<Array<HTMLElement | null>>([])
+  const elementsWalletRef = useRef<Array<HTMLElement | null>>([])
+  const elementsWalletRef2 = useRef<Array<HTMLElement | null>>([])
 
   console.log("Admin address ", address)
 
@@ -99,18 +103,23 @@ export default function Home() {
           <div className="  flex flex-col w-full items-center justify-center mt-12">
             <h1
               className="text-[2.5rem] font-black  "
+              // @ts-ignore
               ref={el => (elementsRef.current[0] = el)}
             >
               Admin Page{" "}
             </h1>
             <h1
               className="text-lg font-light mt-4 "
+              // @ts-ignore
               ref={el => (elementsRef.current[1] = el)}
             >
               connect your wallet to get started{" "}
             </h1>
 
-            <div ref={el => (elementsRef.current[2] = el)}>
+            <div
+              // @ts-ignore
+              ref={el => (elementsRef.current[2] = el)}
+            >
               <Image
                 src={"/Images/MetamaskLogo.svg"}
                 width={200}
@@ -120,7 +129,10 @@ export default function Home() {
               />
             </div>
 
-            <div ref={el => (elementsRef.current[3] = el)}>
+            <div
+              // @ts-ignore
+              ref={el => (elementsRef.current[3] = el)}
+            >
               <ConnectButton />
             </div>
           </div>

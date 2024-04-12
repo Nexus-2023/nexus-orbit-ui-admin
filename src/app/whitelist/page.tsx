@@ -90,18 +90,23 @@ export default function Home() {
           <div className="  flex flex-col w-full items-center justify-center mt-12">
             <h1
               className="text-[2.5rem] font-black  "
+              // @ts-ignore
               ref={el => (elementsRef.current[0] = el)}
             >
               Admin Page{" "}
             </h1>
             <h1
               className="text-lg font-light mt-4 "
+              // @ts-ignore
               ref={el => (elementsRef.current[1] = el)}
             >
               connect your wallet to get started{" "}
             </h1>
 
-            <div ref={el => (elementsRef.current[2] = el)}>
+            <div
+              // @ts-ignore
+              ref={el => (elementsRef.current[2] = el)}
+            >
               <Image
                 src={"/Images/MetamaskLogo.svg"}
                 width={200}
@@ -111,7 +116,10 @@ export default function Home() {
               />
             </div>
 
-            <div ref={el => (elementsRef.current[3] = el)}>
+            <div
+              // @ts-ignore
+              ref={el => (elementsRef.current[3] = el)}
+            >
               <ConnectButton />
             </div>
           </div>

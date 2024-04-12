@@ -21,6 +21,7 @@ export default function NotFound() {
       <div
         className="flex   items-center justify-center  opacity-0  w-full   
        "
+        // @ts-ignore
         ref={el => (elementsRef.current[0] = el)}
       >
         <h1 className="text-5xl font-black text-center -mt-[18rem]  mr-[15rem]   text-black ">
@@ -29,6 +30,7 @@ export default function NotFound() {
       </div>
       <div
         className="  flex   items-center justify-center    relative   w-full opacity-0 "
+        // @ts-ignore
         ref={el => (elementsRef.current[1] = el)}
       >
         <div className="vader   ">
