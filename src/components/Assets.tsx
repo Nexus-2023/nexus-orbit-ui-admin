@@ -16,6 +16,9 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import TextField from "@mui/material/TextField"
+import InputAdornment from "@mui/material/InputAdornment"
+import PercentIcon from "@mui/icons-material/Percent"
+
 const AssetData = [
   {
     token: bitcoin,
@@ -288,7 +291,7 @@ export function WhiteListButton() {
       >
         WhiteList
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <form onSubmit={handleSubmit}>
           <DialogTitle>WhiteList Token</DialogTitle>
           <DialogContent>
@@ -319,59 +322,10 @@ export function WhiteListButton() {
   )
 }
 
-// export function WhiteListButton() {
-//   const [open, setOpen] = React.useState(false)
-
-//   const handleClickOpen = () => {
-//     setOpen(true)
-//   }
-
-//   const handleClose = () => {
-//     setOpen(false)
-//   }
-
-//   return (
-//     <React.Fragment>
-// <Button
-//   variant="contained"
-//   onClick={handleClickOpen}
-//   // sx={{ color: "white", backgroundColor: "#0375C9" }}
-//   sx={{
-//     color: "white",
-//     backgroundColor: "#0375C9",
-//     fontSize: "18px",
-//     paddingX: "2.5rem",
-//     textTransform: "capitalize",
-//   }}
-// >
-//   WhiteList
-// </Button>
-//       <Dialog
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="alert-dialog-title"
-//         aria-describedby="alert-dialog-description"
-//       >
-//         <DialogTitle id="alert-dialog-title">{"WhiteList Token"}</DialogTitle>
-//         <DialogContent>
-//           <DialogContentText id="alert-dialog-description">
-// WhiteListing token contract address
-// 0x8a770B7700f941Bb2E6Dd023AD3B22c2c41C5901
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={handleClose}>Disagree</Button>
-//           <Button onClick={handleClose} autoFocus>
-//             Agree
-//           </Button>
-//         </DialogActions>
-//       </Dialog>
-//     </React.Fragment>
-//   )
-// }
-
 export function ChangeLimitButton() {
   const [open, setOpen] = React.useState(false)
+
+  const [isValidInput, setIsValidInput] = useState(true)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -381,36 +335,67 @@ export function ChangeLimitButton() {
     setOpen(false)
   }
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const inputValue = parseFloat(event.currentTarget.number.value)
+
+    // Check if inputValue is a valid number between 0 and 100
+    if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 100) {
+      console.log("Valid input value:", inputValue)
+      setIsValidInput(true)
+      handleClose()
+    } else {
+      console.log("Invalid input value:", inputValue)
+      setIsValidInput(false)
+    }
+  }
+
   return (
-    <React.Fragment>
+    <div>
       <Button
-        // variant="contained"
         variant="outlined"
         onClick={handleClickOpen}
-        // sx={{ color: "white", backgroundColor: "#0375C9" }}
         sx={{ color: "#0375C9", fontSize: "14px", textTransform: "capitalize" }}
       >
         Change Limit
       </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Change Limit"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Change Limit To any abc asset
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Change Token Limit</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Enter the new Token Limit</DialogContentText>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="name"
+              name="number"
+              label="Limit"
+              type="number"
+              fullWidth
+              variant="standard"
+              error={!isValidInput}
+              helperText={!isValidInput ? "Enter between 0 and 100" : ""}
+              sx={{ fontSize: "20px" }}
+              inputProps={{
+                step: "0.01",
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PercentIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit">Confirm</Button>
+          </DialogActions>
+        </form>
       </Dialog>
-    </React.Fragment>
+    </div>
   )
 }
